@@ -14,13 +14,14 @@ import time
 #coordinate variables -DYNAMIC BASED ON COMPUTER- these are complicated, they are the region in which the health picture is taken. This depends on many factors such as fullscreen or not, and your resolution
 x1 = 0
 y1 = 0
-x2 = 5120
-y2 = 2880
+x2 = 0
+y2 = 0
 #dont change these:
-true = "true"
 img = "image1.png"
 #you can change these tho:
-update_time = 1
+update_time = 5
+#this is based on your starting health in stormbound
+text = 12
 
 def update_image():
 	time.sleep(update_time)
@@ -31,13 +32,21 @@ def update_image():
 	 """
 	im1.save('/Users/nealkotval/Desktop/ocr/image1.png')
 	img = cv2.imread('image1.png')
-    
+
+	gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+	gray, img_bin = cv2.threshold(gray,128,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+	gray = cv2.bitwise_not(img_bin)
+	kernel = np.ones((2, 1), np.uint8)
+	img = cv2.erode(gray, kernel, iterations=1)
+	img = cv2.dilate(img, kernel, iterations=1)
+
 #code stuff
-while true == "true":
+while True:
+	text_prev = text
 	update_image()
 	img = cv2.imread('image1.png')
 	
-	#grayscale stuffs dont mess with this
+	#grayscale stuffs dont mess witth this
 	gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 	gray, img_bin = cv2.threshold(gray,128,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 	gray = cv2.bitwise_not(img_bin)
@@ -46,5 +55,5 @@ while true == "true":
 	img = cv2.dilate(img, kernel, iterations=1)
 
 
-	text = pytesseract.image_to_string(img)
+	text = pytesseract.image_to_int(img)
 	print(text)
