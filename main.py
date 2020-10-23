@@ -10,6 +10,8 @@ import pyautogui
 
 import time
 
+from playsound import playsound
+
 #variables
 #coordinate variables -DYNAMIC BASED ON COMPUTER- these are complicated, they are the region in which the health picture is taken. This depends on many factors such as fullscreen or not, and your resolution
 x1 = 0
@@ -42,7 +44,7 @@ def update_image():
 
 #code stuff
 while True:
-	text_prev = text
+
 	update_image()
 	img = cv2.imread('image1.png')
 	
@@ -54,6 +56,9 @@ while True:
 	img = cv2.erode(gray, kernel, iterations=1)
 	img = cv2.dilate(img, kernel, iterations=1)
 
-
+	text_prev = text
 	text = pytesseract.image_to_int(img)
 	print(text)
+
+	if text != text_prev:
+		playsound('scream.mp3')
