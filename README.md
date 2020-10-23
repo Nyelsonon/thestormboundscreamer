@@ -16,5 +16,7 @@ before you run the scrip tmake a folder called ocr or smthg name rly doesnt matt
 ## other RLY important stuffs
 ight so the script takes a pic of a certain region on your screen so you will have to change the variables according to your screen. Ill find a solution to this later.
 
+## to the python devs out there
+if you want to contribute I owuld be happy to let you! just dm me on discord at *Nyelson#6840*
 # THATS IT MY BOIS
 now go get yelled at by your computer
